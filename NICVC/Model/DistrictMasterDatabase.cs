@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     public class DistrictMasterDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public DistrictMasterDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("DistrictMaster.db3");
             conn.CreateTable<DistrictMaster>();
         }
         public IEnumerable<DistrictMaster> GetDistrictMaster(String Querryhere)

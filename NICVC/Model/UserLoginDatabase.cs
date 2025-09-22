@@ -11,7 +11,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public UserLoginDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("UserLogin.db3");
             conn.CreateTable<UserLogin>();
         }
         public IEnumerable<UserLogin> GetUserLogin(string Querryhere)

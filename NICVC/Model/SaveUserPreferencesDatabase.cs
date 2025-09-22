@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     class SaveUserPreferencesDatabase
@@ -11,8 +10,20 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public SaveUserPreferencesDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
-            conn.CreateTable<SaveUserPreferences>();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("SaveUserPreferencesDatabase: Starting constructor");
+                conn = DatabaseHelper.GetConnection("SaveUserPreferences.db3");
+                System.Diagnostics.Debug.WriteLine("SaveUserPreferencesDatabase: Got connection");
+                conn.CreateTable<SaveUserPreferences>();
+                System.Diagnostics.Debug.WriteLine("SaveUserPreferencesDatabase: Created table");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SaveUserPreferencesDatabase Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"SaveUserPreferencesDatabase Stack: {ex.StackTrace}");
+                throw; // Re-throw to see the original error
+            }
         }
         public IEnumerable<SaveUserPreferences> GetSaveUserPreferences(String Querryhere)
         {

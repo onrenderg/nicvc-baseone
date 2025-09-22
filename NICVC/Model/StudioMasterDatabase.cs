@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace NICVC.Model
 {
   public  class StudioMasterDatabase
@@ -14,7 +13,7 @@ namespace NICVC.Model
 
         public StudioMasterDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("StudioMaster.db3");
             conn.CreateTable<StudioMaster>();
         }
         public IEnumerable<StudioMaster> GetStudioMaster(string Querryhere)

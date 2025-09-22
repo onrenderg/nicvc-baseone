@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     class StateMasterDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
 
         public StateMasterDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("StateMaster.db3");
             conn.CreateTable<StateMaster>();
         }
         public IEnumerable<StateMaster> GetStateMaster(string Querryhere)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     class LanguageMasterDatabase
@@ -13,7 +12,7 @@ namespace NICVC.Model
 
         public LanguageMasterDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("LanguageMaster.db3");
             conn.CreateTable<LanguageMaster>();
         }
         public IEnumerable<LanguageMaster> GetLanguageMaster(string Querryhere)

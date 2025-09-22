@@ -239,16 +239,32 @@ namespace NICVC
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Prefixed: Starting method");
                 var assembly = IntrospectionExtensions.GetTypeInfo(typeof(PreferencePage)).Assembly;
+                System.Diagnostics.Debug.WriteLine("Prefixed: Got assembly");
+                
                 Stream stream = assembly.GetManifestResourceStream("NICVC.languagejson.txt");
+                System.Diagnostics.Debug.WriteLine($"Prefixed: Got stream - {(stream != null ? "Success" : "NULL")}");
+                
+                if (stream == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Prefixed: Stream is null, skipping language initialization");
+                    return;
+                }
+                
                 string MyJson = "";
                 using (var reader = new StreamReader(stream))
                 {
                     MyJson = reader.ReadToEnd();
                 }
+                System.Diagnostics.Debug.WriteLine($"Prefixed: Read JSON, length: {MyJson.Length}");
+                
                 JObject parsed = JObject.Parse(MyJson);
+                System.Diagnostics.Debug.WriteLine("Prefixed: Parsed JSON");
+                
                 // languageMasterDatabase = new LanguageMasterDatabase();
                 languageMasterDatabase.DeleteLanguageMaster();
+                System.Diagnostics.Debug.WriteLine("Prefixed: Deleted existing language data");
 
                 foreach (var pair in parsed)
                 {
@@ -269,9 +285,12 @@ namespace NICVC
                         }
                     }
                 }
+                System.Diagnostics.Debug.WriteLine("Prefixed: Completed successfully");
             }
             catch (Exception ey)
             {
+                System.Diagnostics.Debug.WriteLine($"Prefixed Error: {ey.Message}");
+                System.Diagnostics.Debug.WriteLine($"Prefixed Stack: {ey.StackTrace}");
                 Current.MainPage.DisplayAlert("NICVC", ey.Message + "Failed to Load Default Data. Please Uninstall and then Re-install the App again", "OK");
             }
         }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.IO;
 
 namespace NICVC.Model
 {
@@ -11,7 +11,8 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public AlertableDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            // Use the new MAUI database helper
+            conn = DatabaseHelper.GetConnection("AlertableDatabase.db3");
             conn.CreateTable<Alertable>();
         }
         public IEnumerable<Alertable> GetAlertable(String Querryhere)
