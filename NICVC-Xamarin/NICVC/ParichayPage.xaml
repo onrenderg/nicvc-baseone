@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="NICVC.ParichayPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
+    <NavigationPage.TitleView  >
+        <StackLayout x:Name="Custom_Navigation" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+            <Image Source="ic_launcher.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
+            <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
+
+                <Label x:Name="Lbl_Header" Text="NIC Video Conferencing" Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                      VerticalTextAlignment="Center" />
+                <!--<Label   Text="Department Of Health &amp; Family Welfare, H.P." TextColor="White" FontSize="Small" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                      VerticalTextAlignment="Center" />-->
+
+            </StackLayout>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_home.png" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>-->
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+        <WebView x:Name="Parichay_browser" Navigating="Parichay_browser_Navigating" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+    </StackLayout>
+</ContentPage>
+
