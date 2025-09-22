@@ -1,6 +1,5 @@
 // Global using statements for NICVC MAUI project
 global using Microsoft.Maui.Controls;
-global using Microsoft.Maui.Essentials;
 global using Microsoft.Maui.Controls.Compatibility;
 global using System;
 global using System.Collections.Generic;

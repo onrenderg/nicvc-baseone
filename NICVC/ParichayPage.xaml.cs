@@ -9,9 +9,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NICVC.Model;
-
-
-using Xamarin.Forms.Shapes;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace NICVC
 {
@@ -38,12 +36,12 @@ namespace NICVC
             }
         }
 
-        void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
+        void ToolbarItem_Clicked(System.Object sender, EventArgs e)
         {
 
         }
 
-        async void Parichay_browser_Navigating(System.Object sender, Xamarin.Forms.WebNavigatingEventArgs e)
+        async void Parichay_browser_Navigating(System.Object sender, WebNavigatingEventArgs e)
         {
             if (string.IsNullOrEmpty(Action_Logout))
             {
@@ -185,8 +183,8 @@ namespace NICVC
                     {
                         App.Current.MainPage = new NavigationPage(new PreferencePage())
                         {
-                            BarBackgroundColor = Color.FromHex("#2196f3"),
-                            BarTextColor = Color.WhiteSmoke
+                            BarBackgroundColor = Color.FromArgb("#2196f3"),
+                            BarTextColor = Colors.WhiteSmoke
                         };
                     }
                     
@@ -216,4 +214,3 @@ namespace NICVC
 
     }
 }
-

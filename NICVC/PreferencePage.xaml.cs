@@ -10,6 +10,7 @@ using System.Web;
 
 
 
+
 namespace NICVC
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -412,8 +413,8 @@ namespace NICVC
                     {
                         Application.Current.MainPage = new NavigationPage(new PreferencePage())
                         {
-                            BarBackgroundColor = Color.FromHex("#2196f3"),
-                            BarTextColor = Color.WhiteSmoke
+                            BarBackgroundColor = Color.FromArgb("#2196f3"),
+                            BarTextColor = Colors.WhiteSmoke
                         };
                     }
                     

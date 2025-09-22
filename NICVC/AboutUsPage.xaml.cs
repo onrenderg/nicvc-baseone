@@ -1,7 +1,5 @@
 ﻿using System;
 
-
-
 using NICVC.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -183,7 +181,7 @@ namespace NICVC
         //revoke
         public async Task<int> Auth_Revoke()
         {
-            string _tokenFromParichay = Xamarin.Essentials.Preferences.Get("access_token", "");
+            string _tokenFromParichay = Microsoft.Maui.Storage.Preferences.Default.Get("access_token", "");
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
@@ -225,8 +223,8 @@ namespace NICVC
             }
             Application.Current.MainPage = new NavigationPage(new ParichayPage("Logout"))
             {
-                BarBackgroundColor = Color.FromHex("#2196f3"),
-                BarTextColor = Color.WhiteSmoke
+                BarBackgroundColor = Color.FromArgb("#2196f3"),
+                BarTextColor = Colors.WhiteSmoke
             };
         }
     }
