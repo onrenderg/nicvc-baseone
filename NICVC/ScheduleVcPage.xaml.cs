@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using NICVC.Model;
 using System;
 using System.Collections.Generic;
@@ -140,11 +140,22 @@ namespace NICVC
             }
         }
 
-        private void listView_schedulevc_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void listView_schedulevc_ItemTapped(object sender, EventArgs e)
         {
-            var currentRecord = e.Item as ScheduleVc;
-            App.vcdateschedulevc = currentRecord.DateofVC.ToString();
-            Navigation.PushAsync(new ScheduleVcDetailsPage());
+            var tappedEventArgs = e as TappedEventArgs;
+            var currentRecord = tappedEventArgs?.Parameter as ScheduleVc;
+            if (currentRecord == null)
+            {
+                // For CollectionView, get the binding context from the sender
+                var grid = sender as Microsoft.Maui.Controls.Grid;
+                currentRecord = grid?.BindingContext as ScheduleVc;
+            }
+            
+            if (currentRecord != null)
+            {
+                App.vcdateschedulevc = currentRecord.DateofVC.ToString();
+                Navigation.PushAsync(new ScheduleVcDetailsPage());
+            }
         }
 
         private async Task GetScheduleVc(string fromdate, string todate)

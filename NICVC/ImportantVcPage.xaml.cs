@@ -1,10 +1,9 @@
-﻿using NICVC.Model;
+using NICVC.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
-
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Xaml;
 
 namespace NICVC
 {
@@ -80,12 +79,22 @@ namespace NICVC
 
 
 
-        private void listView_ImportantVc_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void listView_ImportantVc_ItemTapped(object sender, EventArgs e)
         {
-            var currentRecord = e.Item as ImportantVc;
-            App.vcdateimportantvc = currentRecord.DateofVC.ToString();
+            var tappedEventArgs = e as TappedEventArgs;
+            var currentRecord = tappedEventArgs?.Parameter as ImportantVc;
+            if (currentRecord == null)
+            {
+                // For CollectionView, get the binding context from the sender
+                var grid = sender as Microsoft.Maui.Controls.Grid;
+                currentRecord = grid?.BindingContext as ImportantVc;
+            }
             
-            Navigation.PushAsync(new ImportantVcDetailsPage(currentRecord.Startingtime));
+            if (currentRecord != null)
+            {
+                App.vcdateimportantvc = currentRecord.DateofVC.ToString();
+                Navigation.PushAsync(new ImportantVcDetailsPage(currentRecord.Startingtime));
+            }
         }
         private void ToolbarItem_Clicked(object sender, EventArgs e)
         {

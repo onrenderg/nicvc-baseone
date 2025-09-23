@@ -1,4 +1,4 @@
-﻿using NICVC.Model;
+using NICVC.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,12 +76,23 @@ namespace NICVC
 
         }
 
-        private void listView_ongoingvc_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void listView_ongoingvc_ItemTapped(object sender, EventArgs e)
         {
-            var currentRecord = e.Item as TodayVc;
-            App.starttimetodayvc = currentRecord.Startingtime.ToString();
-            App.vcstatustodayvc = "Ongoing";
-            Navigation.PushAsync(new TodayVcDetailsPage());
+            var tappedEventArgs = e as TappedEventArgs;
+            var currentRecord = tappedEventArgs?.Parameter as TodayVc;
+            if (currentRecord == null)
+            {
+                // For CollectionView, get the binding context from the sender
+                var grid = sender as Microsoft.Maui.Controls.Grid;
+                currentRecord = grid?.BindingContext as TodayVc;
+            }
+            
+            if (currentRecord != null)
+            {
+                App.starttimetodayvc = currentRecord.Startingtime.ToString();
+                App.vcstatustodayvc = "Ongoing";
+                Navigation.PushAsync(new TodayVcDetailsPage());
+            }
         }
 
         private void ToolbarItem_Clicked(object sender, EventArgs e)
