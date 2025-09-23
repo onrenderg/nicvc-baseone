@@ -20,10 +20,12 @@ namespace NICVC
         {
             InitializeComponent();
             Action_Logout = Logout;
+            System.Diagnostics.Debug.WriteLine("ParichayPage: Starting initialization");
             if (string.IsNullOrEmpty(Action_Logout))
             {
-              //  Parichay_browser.Source = $"https://parichay.staging.nic.in/pnv1/oauth2/authorize?client_id={App.clientid}&redirect_uri={App.Redirectionuri}&scope={App.scope}&code_challenge={App.CodeChallange}&state={DateTime.Now.ToString("yyMMddHHmmsss")}&code_challenge_method=S256&response_type=code";
-                Parichay_browser.Source = $"https://parichay.nic.in/pnv1/oauth2/authorize?client_id={App.clientid}&redirect_uri={App.Redirectionuri}&scope={App.scope}&code_challenge={App.CodeChallange}&state={DateTime.Now.ToString("yyMMddHHmmsss")}&code_challenge_method=S256&response_type=code";
+                var url = $"https://parichay.nic.in/pnv1/oauth2/authorize?client_id={App.clientid}&redirect_uri={App.Redirectionuri}&scope={App.scope}&code_challenge={App.CodeChallange}&state={DateTime.Now.ToString("yyMMddHHmmsss")}&code_challenge_method=S256&response_type=code";
+                System.Diagnostics.Debug.WriteLine($"ParichayPage: Loading URL: {url}");
+                Parichay_browser.Source = url;
             }
             else
             {
@@ -31,7 +33,6 @@ namespace NICVC
                 {
                     await DisplayAlert("Logout", "Please Logout your Parichay account from here manually!", "OK");                    
                 });
-                //Parichay_browser.Source = $"https://parichay.staging.nic.in";
                 Parichay_browser.Source = $"https://parichay.nic.in";
             }
         }
@@ -60,7 +61,6 @@ namespace NICVC
             }
             else
             {                
-                //if (e.Url.StartsWith("https://parichay.staging.nic.in/Accounts/Services?service="))
                 if (e.Url.StartsWith("https://parichay.nic.in/Accounts/Services?service="))
                 {
                     App.Current.MainPage = new NavigationPage(new ParichayPage());

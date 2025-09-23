@@ -142,12 +142,12 @@ namespace NICVC
             {
                 if (DeviceInfo.Platform == DevicePlatform.iOS)
                 {
-                    MainPage = new NavigationPage(new PreferencePage());
+                    MainPage = new NavigationPage(new ParichayPage());
                     return;
                 }
                 else
                 {
-                    MainPage = new NavigationPage(new PreferencePage())
+                    MainPage = new NavigationPage(new ParichayPage())
                     {
                         BarBackgroundColor = Color.FromArgb("#2196f3"),
                         BarTextColor = Colors.WhiteSmoke

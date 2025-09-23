@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-
-
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Xaml;
 using NICVC.Model;
-
 using System.Net.Sockets;
 using NICVC.Notification;
 using System.Globalization;
@@ -49,6 +48,79 @@ namespace NICVC
             Lbl_Header.Text = App.GetLabelByKey("nicvdconf");
             Lbl_UserDetails.Text = Preferences.Get("DisplayName", "");
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            scheduleVcDatabase = new ScheduleVcDatabase();
+            saveUserPreferencesDatabase = new SaveUserPreferencesDatabase();
+            dashboardDatabase = new DashboardDatabase();
+            todayVcDatabase = new TodayVcDatabase();
+            alertableDatabase = new AlertableDatabase();
+
+            SavedUserPreferList = saveUserPreferencesDatabase.GetSaveUserPreferences("select * from SaveUserPreferences").ToList();
+            dashboardlist = dashboardDatabase.GetDashboard("Select * from dashboard").ToList();
+
+            if (SavedUserPreferList.Any())
+            {
+                string stateid = SavedUserPreferList.ElementAt(0).StateName;
+                string district = SavedUserPreferList.ElementAt(0).DistrictName;
+                string studio = SavedUserPreferList.ElementAt(0).StudioName;
+                string statechanged = SavedUserPreferList.ElementAt(0).StateChanged;
+
+                if (studio != null && studio.Length > 0)
+                {
+                    Lbl_Header.Text = stateid + " - " + district + " - " + studio;
+                }
+                else if (district != null && district.Length > 0)
+                {
+                    Lbl_Header.Text = stateid + " - " + district;
+                }
+                else
+                {
+                    Lbl_Header.Text = stateid;
+                }
+
+                var current = Connectivity.NetworkAccess;
+                if (statechanged.Contains("Y"))
+                {
+                    if (current == NetworkAccess.Internet)
+                    {
+                        await GetTodayVc();
+                    }
+                }
+                else
+                {
+                    if (dashboardlist.Any())
+                    {
+                        string dashboarddate = dashboardlist.ElementAt(0).Date;
+                        if (dashboarddate.Equals(DateTime.Now.ToString("dd/MM/yyyy")))
+                        {
+                            showdashboard();
+                        }
+                        else
+                        {
+                            if (current == NetworkAccess.Internet)
+                            {
+                                await GetTodayVc();
+                            }
+                            else
+                            {
+                                showdashboard();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (current == NetworkAccess.Internet)
+                        {
+                            await GetTodayVc();
+                        }
+                    }
+                }
+            }
+        }
+
         void shownotificationpopup()
         {
             string vcid, vcdate, vcstarttime, notifystartdate;
@@ -340,9 +412,6 @@ namespace NICVC
                             }
                         }
                     }
-
-
-
                 }
                 Loading_activity.IsVisible = false;
 
@@ -503,75 +572,6 @@ namespace NICVC
                 await DisplayAlert(App.GetLabelByKey("Exception"), ey.Message, "OK");
                 return;
             }
-        }
-
-        protected override void OnAppearing()
-        {
-
-            scheduleVcDatabase = new ScheduleVcDatabase();
-            saveUserPreferencesDatabase = new SaveUserPreferencesDatabase();
-            dashboardDatabase = new DashboardDatabase();
-            todayVcDatabase = new TodayVcDatabase();
-            alertableDatabase = new AlertableDatabase();
-
-            SavedUserPreferList = saveUserPreferencesDatabase.GetSaveUserPreferences("select * from SaveUserPreferences").ToList();
-            dashboardlist = dashboardDatabase.GetDashboard("Select * from dashboard").ToList();
-
-
-            string stateid = SavedUserPreferList.ElementAt(0).StateName;
-            string district = SavedUserPreferList.ElementAt(0).DistrictName;
-            string studio = SavedUserPreferList.ElementAt(0).StudioName;
-            string statechanged = SavedUserPreferList.ElementAt(0).StateChanged;
-
-            if (studio != null && studio.Length > 0)
-            {
-                Lbl_Header.Text = stateid + " - " + district + " - " + studio;
-            }
-            else if (district != null && district.Length > 0)
-            {
-                Lbl_Header.Text = stateid + " - " + district;
-            }
-            else
-            {
-                Lbl_Header.Text = stateid;
-            }
-
-
-            var current = Connectivity.NetworkAccess;
-            if (statechanged.Contains("Y"))
-            {
-
-                if (current == NetworkAccess.Internet)
-                {
-                    Device.BeginInvokeOnMainThread(async () => await GetTodayVc());
-                }
-            }
-            else
-            {
-                if (dashboardlist.Any())
-                {
-                    string dashboarddate = dashboardlist.ElementAt(0).Date;
-                    if (dashboarddate.Equals(DateTime.Now.ToString("dd/MM/yyyy")))
-                    {
-                        showdashboard();
-                    }
-                    else
-                    {
-                        if (current == NetworkAccess.Internet)
-                        {
-                            Device.BeginInvokeOnMainThread(async () => await GetTodayVc());
-                        }
-                    }
-                }
-                else
-                {
-                    if (current == NetworkAccess.Internet)
-                    {
-                        Device.BeginInvokeOnMainThread(async () => await GetTodayVc());
-                    }
-                }
-            }
-
         }
 
         private async Task getsearchbyvcid(string vcid)
