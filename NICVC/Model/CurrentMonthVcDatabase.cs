@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     public class CurrentMonthVcDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public CurrentMonthVcDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("CurrentMonthVc.db3");
             conn.CreateTable<CurrentMonthVc>();
         }
         public IEnumerable<CurrentMonthVc> GetCurrentMonthVc(String Querryhere)

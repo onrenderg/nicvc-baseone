@@ -11,7 +11,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public ImportantVcDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("ImportantVc.db3");
             conn.CreateTable<ImportantVc>();
         }
         public IEnumerable<ImportantVc> GetImportantVc(String Querryhere)

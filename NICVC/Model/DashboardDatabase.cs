@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
    public class DashboardDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public DashboardDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("Dashboard.db3");
             conn.CreateTable<Dashboard>();
         }
         public IEnumerable<Dashboard> GetDashboard(String Querryhere)

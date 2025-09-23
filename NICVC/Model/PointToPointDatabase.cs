@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
-   public class PointToPointDatabase
+    public class PointToPointDatabase
     {
         private SQLiteConnection conn;
         public PointToPointDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("PointToPoint.db3");
             conn.CreateTable<PointToPoint>();
         }
         public IEnumerable<PointToPoint> GetPointToPoint(String Querryhere)

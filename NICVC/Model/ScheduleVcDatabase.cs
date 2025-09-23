@@ -3,16 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     public class ScheduleVcDatabase
-
     {
         private SQLiteConnection conn;
         public ScheduleVcDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("ScheduleVc.db3");
             conn.CreateTable<ScheduleVc>();
         }
         public IEnumerable<ScheduleVc> GetScheduleVc(String Querryhere)

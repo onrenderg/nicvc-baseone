@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace NICVC.Model
 {
     class SearchByVcIdDatabase
@@ -12,7 +11,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public SearchByVcIdDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("SearchByVcId.db3");
             conn.CreateTable<SearchByVcId>();
         }
         public IEnumerable<SearchByVcId> GetSearchByVcId(String Querryhere)

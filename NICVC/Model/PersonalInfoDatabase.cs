@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
-   public class PersonalInfoDatabase
+    public class PersonalInfoDatabase
     {
         private SQLiteConnection conn;
         public PersonalInfoDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("PersonalInfo.db3");
             conn.CreateTable<PersonalInfo>();
         }
         public IEnumerable<PersonalInfo> GetPersonalInfo(String Querryhere)

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
     public class MultipointNICDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public MultipointNICDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("MultipointNIC.db3");
             conn.CreateTable<MultipointNIC>();
         }
         public IEnumerable<MultipointNIC> GetMultipointNIC(String Querryhere)

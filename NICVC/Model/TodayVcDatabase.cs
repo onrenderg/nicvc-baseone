@@ -12,7 +12,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public TodayVcDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("TodayVc.db3");
             conn.CreateTable<TodayVc>();
         }
         public IEnumerable<TodayVc> GetTodayVc(String Querryhere)

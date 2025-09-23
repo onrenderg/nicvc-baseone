@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
    public class LatLongDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public LatLongDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("LatLong.db3");
             conn.CreateTable<LatLong>();
         }
         public IEnumerable<LatLong> GetLatLong(String Querryhere)

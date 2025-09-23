@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
-   public class MultipointStateDatabase
+    public class MultipointStateDatabase
     {
         private SQLiteConnection conn;
         public MultipointStateDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("MultipointState.db3");
             conn.CreateTable<MultipointState>();
         }
         public IEnumerable<MultipointState> GetMultipointState(String Querryhere)
@@ -34,7 +33,6 @@ namespace NICVC.Model
             var del = conn.Query<MultipointState>("delete from MultipointState");
             return "success";
         }  
-      
 
         public string UpdateCustomqueryMultipointState(string query)
         {

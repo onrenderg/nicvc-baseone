@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
    public class YearWiseVcDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public YearWiseVcDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("YearWiseVc.db3");
             conn.CreateTable<YearWiseVc>();
         }
         public IEnumerable<YearWiseVc> GetYearWiseVc(String Querryhere)

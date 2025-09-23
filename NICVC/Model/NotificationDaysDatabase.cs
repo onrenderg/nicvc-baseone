@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NICVC.Model
 {
    public class NotificationDaysDatabase
@@ -11,7 +10,7 @@ namespace NICVC.Model
         private SQLiteConnection conn;
         public NotificationDaysDatabase()
         {
-            conn = DependencyService.Get<ISQLite>().GetConnection();
+            conn = DatabaseHelper.GetConnection("NotificationDays.db3");
             conn.CreateTable<NotificationDays>();
         }
         public IEnumerable<NotificationDays> GetNotificationDays(string Querryhere)
